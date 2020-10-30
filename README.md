@@ -1,0 +1,2 @@
+# springcloud-Rabbitmq-valid
+正确无误的rabbitmq根据用户id删除订餐系统项目中用户代码示例
