@@ -1,0 +1,23 @@
+server:
+  port: 8031
+
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /test1
+
+ ####################################  ACK反馈配置
+    listener:
+      simple:
+        retry:
+          enabled: true    #开启重试
+    template:
+      retry:
+        max-attempts: 5     #重试次数，默认为3次
+
+
+
