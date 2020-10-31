@@ -20,14 +20,25 @@ public class RabbitMQConfig {
         return new TopicExchange("exchange-test");
     }
 
-    @Bean(name="message")
-    public Queue queue(){
+    @Bean(name="delete_message")
+    public Queue deletequeue(){
         return  new Queue("topic.find");
     }
 
+    @Bean(name="createuser_message")
+    public Queue createqueue(){
+        return  new Queue("topic.createuser");
+    }
+
     @Bean
-    public Binding binding(@Qualifier("message") Queue queue, TopicExchange topicExchange){
+    public Binding deleteByid_binding(@Qualifier("delete_message") Queue queue, TopicExchange topicExchange){
 
         return BindingBuilder.bind(queue).to(topicExchange).with("topic.find.routingkey");
+    }
+
+    @Bean
+    public Binding createUser_binding(@Qualifier("createuser_message") Queue queue,TopicExchange topicExchange){
+
+        return BindingBuilder.bind(queue).to(topicExchange).with("topic.createuser.routingkey");
     }
 }

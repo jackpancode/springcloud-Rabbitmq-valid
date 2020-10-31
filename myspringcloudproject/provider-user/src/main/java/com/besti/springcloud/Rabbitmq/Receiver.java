@@ -1,6 +1,7 @@
 package com.besti.springcloud.Rabbitmq;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.besti.springcloud.entity.User;
 import com.besti.springcloud.repository.UserRepository;
 import org.springframework.amqp.core.ExchangeTypes;
@@ -31,11 +32,13 @@ public class Receiver {
 //            key = {"topic.find.routingkey"}
 //    ))
     @RabbitListener(queues = "topic.find")
-    public void process(long msg) throws Exception{
-        //String id = msg;
-       // long id = Long.valueOf(msg).longValue();
+    public void getMsgDelete(long msg) throws Exception{
         userRepository.deleteById(msg);
-        //String RespMsg = JSON.toJSONString(user);
-        //sender.sendTopic(exchange,routekey,user);
+    }
+
+    @RabbitListener(queues = "topic.createuser")
+    public void getMsgCreate(String msg) throws Exception{
+        User user = JSONObject.parseObject(msg,User.class);
+        userRepository.save(user);
     }
 }
